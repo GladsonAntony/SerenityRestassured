@@ -20,4 +20,5 @@ Gradle's default test reports are in the build/reports directory. In addition, S
 
 ## Further information
 [RESTful API Testing Using Serenity and REST Assured - A Guide](https://www.blazemeter.com/blog/restful-api-testing-using-serenity-and-rest-assured-a-guide)
+
 [First Test with Rest-Assured](http://toolsqa.com/rest-assured/rest-assured-test/)
