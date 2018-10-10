@@ -3,37 +3,48 @@
  * @Date 02-OCT-2018
  */
 
-package tests.soapexamples;
+package examples.soap;
 
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
-import lombok.Getter;
-import lombok.Setter;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
-import net.thucydides.junit.annotations.UseTestDataFrom;
+import net.thucydides.junit.annotations.Concurrent;
+import net.thucydides.junit.annotations.TestData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 
 @RunWith(SerenityParameterizedRunner.class)
-@UseTestDataFrom("./src/test/resources/test-data.csv")
-public class GetBankDetailsCSVParameters
+@Concurrent
+public class GetBankDetails
 {
-    @Getter @Setter String bankBlzCode;
-
-    @Qualifier
-    public String getQualifier()
+    @TestData
+    public static Collection<Object[]> testData()
     {
-        return this.bankBlzCode;
+        return Arrays.asList(new Object[][]{
+                {"39060180"},
+                {"51010800"},
+                {"10030400"},
+                {"76060561"},
+                {"123456789"}
+        });
+    }
+
+    private String bankBlzCode;
+
+    public GetBankDetails(String bankBlzCode)
+    {
+        this.bankBlzCode = bankBlzCode;
     }
 
     @Test
-    public void shouldRunTheseSoapExamples()
+    public void getBankDetail1() throws Exception
     {
         String getBankDetailsXML = "<soapenv:Envelope \n" +
                 "    xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" \n" +
@@ -41,7 +52,7 @@ public class GetBankDetailsCSVParameters
                 "    <soapenv:Header/>\n" +
                 "    <soapenv:Body>\n" +
                 "        <blz:getBank>\n" +
-                "            <blz:blz>" + this.bankBlzCode + "</blz:blz>\n" +
+                "            <blz:blz>" + bankBlzCode + "</blz:blz>\n" +
                 "        </blz:getBank>\n" +
                 "    </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
@@ -57,6 +68,7 @@ public class GetBankDetailsCSVParameters
         {
             e.printStackTrace();
         }
+
 
         Response response = RestAssured
                 .given()

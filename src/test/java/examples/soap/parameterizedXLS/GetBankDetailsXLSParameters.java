@@ -3,7 +3,8 @@
  * @Date 02-OCT-2018
  */
 
-package tests.soapexamples;
+package examples.soap.parameterizedXLSX;
+
 
 import dataprovider.XlsxSheetDataProvider;
 import io.restassured.RestAssured;
@@ -13,10 +14,10 @@ import io.restassured.response.Response;
 import lombok.Getter;
 import lombok.Setter;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
+import net.thucydides.junit.annotations.Qualifier;
 import net.thucydides.junit.annotations.TestData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -27,23 +28,31 @@ import java.util.Collection;
 @RunWith(SerenityParameterizedRunner.class)
 public class GetBankDetailsXLSXParameters
 {
-    @Getter @Setter String bankBlzCode;
+    private @Getter @Setter String bankBlzCode1;
+    private @Getter @Setter String bankBlzCode2;
+
+    public GetBankDetailsXLSXParameters(String bankBlzCode1,String bankBlzCode2)
+    {
+        super();
+        this.bankBlzCode1 = bankBlzCode1;
+        this.bankBlzCode2 = bankBlzCode2;
+    }
 
     @TestData
-    public static Collection spreadsheetData() throws Exception
+    public static Collection xlsxSheetData() throws Exception
     {
-        InputStream spreadsheet = new FileInputStream("./src/test/resources/Excel Files/getBankDetails.xlsx");
-        return new XlsxSheetDataProvider(spreadsheet).getData();
+        InputStream xlsxSpreadsheet = new FileInputStream("./src/test/resources/getBankDetails.xlsx");
+        return new XlsxSheetDataProvider(xlsxSpreadsheet).getData();
     }
 
     @Qualifier
     public String getQualifier()
     {
-        return this.bankBlzCode;
+        return this.bankBlzCode1;
     }
 
     @Test
-    public void shouldRunTheseSoapExamples()
+    public void shouldGetBankBlzCode() throws Exception
     {
         String getBankDetailsXML = "<soapenv:Envelope \n" +
                 "    xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" \n" +
@@ -51,14 +60,14 @@ public class GetBankDetailsXLSXParameters
                 "    <soapenv:Header/>\n" +
                 "    <soapenv:Body>\n" +
                 "        <blz:getBank>\n" +
-                "            <blz:blz>" + this.bankBlzCode + "</blz:blz>\n" +
+                "            <blz:blz>" + this.bankBlzCode1 + "</blz:blz>\n" +
                 "        </blz:getBank>\n" +
                 "    </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
 
         try
         {
-            FileWriter file = new FileWriter("./src/test/resources/Requests/" + bankBlzCode + "_Request.xml");
+            FileWriter file = new FileWriter("./src/test/resources/Requests/" + bankBlzCode1 + "_Request.xml");
             file.write(getBankDetailsXML);
             file.flush();
             file.close();
@@ -88,7 +97,7 @@ public class GetBankDetailsXLSXParameters
 
         try
         {
-            FileWriter file = new FileWriter("./src/test/resources/Response/" + bankBlzCode + "_Response.xml");
+            FileWriter file = new FileWriter("./src/test/resources/Response/" + bankBlzCode1 + "_Response.xml");
             file.write(response.getBody().prettyPrint().toString());
             file.flush();
             file.close();
@@ -97,6 +106,5 @@ public class GetBankDetailsXLSXParameters
         {
             e.printStackTrace();
         }
-
     }
 }

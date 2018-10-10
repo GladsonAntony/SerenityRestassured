@@ -3,56 +3,56 @@
  * @Date 02-OCT-2018
  */
 
-package tests.soapexamples;
+package examples.soap;
 
-import io.restassured.RestAssured;
-import io.restassured.config.LogConfig;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.response.Response;
+import dataproviders.XlsxSheetDataProvider;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.junit.annotations.Concurrent;
 import net.thucydides.junit.annotations.TestData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Collection;
 
 @RunWith(SerenityParameterizedRunner.class)
 @Concurrent
-public class GetBankDetails
+public class GetBankDetailsXLSXParameters
 {
-    @TestData
-    public static Collection<Object[]> testData()
-    {
-        return Arrays.asList(new Object[][]{
-                {"39060180"},
-                {"51010800"},
-                {"10030400"},
-                {"76060561"},
-                {"123456789"}
-        });
-    }
-
     private String bankBlzCode;
 
-    public GetBankDetails(String bankBlzCode)
+    @TestData
+    public static Collection spreadsheetData() throws Exception
     {
+        InputStream spreadsheet = new FileInputStream("./src/test/resources/getBankDetails.xlsx");
+        return new XlsxSheetDataProvider(spreadsheet).getData();
+    }
+
+    @Qualifier
+    public String getQualifier()
+    {
+        return this.bankBlzCode;
+    }
+
+    public GetBankDetailsXLSXParameters(String bankBlzCode)
+    {
+        super();
         this.bankBlzCode = bankBlzCode;
     }
 
     @Test
-    public void getBankDetail1() throws Exception
+    public void shouldGetBankBlzCode() throws Exception
     {
-        String getBankDetailsXML = "<soapenv:Envelope \n" +
+        System.out.println(bankBlzCode);
+        /*String getBankDetailsXML = "<soapenv:Envelope \n" +
                 "    xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" \n" +
                 "    xmlns:blz=\"http://thomas-bayer.com/blz/\">\n" +
                 "    <soapenv:Header/>\n" +
                 "    <soapenv:Body>\n" +
                 "        <blz:getBank>\n" +
-                "            <blz:blz>" + bankBlzCode + "</blz:blz>\n" +
+                "            <blz:blz>" + this.bankBlzCode + "</blz:blz>\n" +
                 "        </blz:getBank>\n" +
                 "    </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
@@ -68,7 +68,6 @@ public class GetBankDetails
         {
             e.printStackTrace();
         }
-
 
         Response response = RestAssured
                 .given()
@@ -98,7 +97,7 @@ public class GetBankDetails
         catch (IOException e)
         {
             e.printStackTrace();
-        }
+        }*/
 
     }
 }
