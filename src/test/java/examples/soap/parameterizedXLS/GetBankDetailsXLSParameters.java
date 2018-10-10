@@ -1,12 +1,12 @@
 /**
  * @Author Gladson Antony
- * @Date 02-OCT-2018
+ * @Date 10-OCT-2018
  */
 
-package examples.soap.parameterizedXLSX;
+package examples.soap.parameterizedXLS;
 
 
-import dataprovider.XlsxSheetDataProvider;
+import dataprovider.XlsSheetDataProvider;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.filter.log.LogDetail;
@@ -26,12 +26,12 @@ import java.io.InputStream;
 import java.util.Collection;
 
 @RunWith(SerenityParameterizedRunner.class)
-public class GetBankDetailsXLSXParameters
+public class GetBankDetailsXLSParameters
 {
     private @Getter @Setter String bankBlzCode1;
     private @Getter @Setter String bankBlzCode2;
 
-    public GetBankDetailsXLSXParameters(String bankBlzCode1,String bankBlzCode2)
+    public GetBankDetailsXLSParameters(String bankBlzCode1, String bankBlzCode2)
     {
         super();
         this.bankBlzCode1 = bankBlzCode1;
@@ -41,8 +41,8 @@ public class GetBankDetailsXLSXParameters
     @TestData
     public static Collection xlsxSheetData() throws Exception
     {
-        InputStream xlsxSpreadsheet = new FileInputStream("./src/test/resources/getBankDetails.xlsx");
-        return new XlsxSheetDataProvider(xlsxSpreadsheet).getData();
+        InputStream xlsSpreadsheet = new FileInputStream("./src/test/resources/getBankDetails.xls");
+        return new XlsSheetDataProvider(xlsSpreadsheet).getData();
     }
 
     @Qualifier

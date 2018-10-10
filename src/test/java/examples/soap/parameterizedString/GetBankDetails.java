@@ -1,9 +1,9 @@
 /**
  * @Author Gladson Antony
- * @Date 02-OCT-2018
+ * @Date 10-OCT-2018
  */
 
-package examples.soap;
+package examples.soap.parameterizedString;
 
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;

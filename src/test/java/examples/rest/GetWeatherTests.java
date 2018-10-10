@@ -1,4 +1,4 @@
-package tests.restexamples;
+package examples.rest;
 
 import io.restassured.RestAssured;
 import io.restassured.http.Method;
@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
-import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.equalTo;
 
 public class GetWeatherTests
