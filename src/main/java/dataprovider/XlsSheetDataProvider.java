@@ -3,14 +3,13 @@ package dataprovider;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class XlsSheetDataProvider
 {
     // The transient keyword in Java is used to indicate that a field should not be serialized.

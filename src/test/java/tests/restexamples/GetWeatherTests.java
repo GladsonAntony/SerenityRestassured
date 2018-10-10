@@ -33,13 +33,12 @@ public class GetWeatherTests
     public void get_weather_details_then_extract_response()
     {
         Response response =
-                 when().
-                        get("/Brisbane").
-                 then().
-                        contentType("text/html").
-                        body("City", equalTo("Brisbane")).
-                 extract().
-                        response();
+                when()
+                 .get("/Brisbane")
+                 .then()
+                 .body("City", equalTo("Brisbane"))
+                 .extract()
+                 .response();
 
         String weatherDescription = response.path("WeatherDescription");
         System.out.print("weather description is " + weatherDescription);
