@@ -9,12 +9,13 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SerenityRunner.class)
-public class CountrySearchTests
-{
+public class CountrySearchTests {
+
 
     @Test
-    public void verify_country_search_using_code_AU()
-    {
+    public void verify_country_search_using_code_AU() {
+        System.setProperty("com.google.inject.internal.cglib.$experimental_asm7", "true");
+
         RestAssured
                 .when()
                 .get("http://services.groupkt.com/country/get/iso2code/AU")
@@ -27,8 +28,9 @@ public class CountrySearchTests
 
     @Step("To Verify the Country Code US")
     @Test
-    public void verify_country_search_using_code_US()
-    {
+    public void verify_country_search_using_code_US() {
+        System.setProperty("com.google.inject.internal.cglib.$experimental_asm7", "true");
+
         RestAssured
                 .when()
                 .get("http://services.groupkt.com/country/get/iso2code/US")
