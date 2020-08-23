@@ -1,3 +1,5 @@
 .idea
 /target
 *.iml
+Serenity_RestAssured.ipr
+Serenity_RestAssured.iws

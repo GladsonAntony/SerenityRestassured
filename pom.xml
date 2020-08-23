@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gladson</groupId>
     <artifactId>Serenity_RestAssured</artifactId>
@@ -410,7 +409,16 @@
                         <artifactId>serenity-core</artifactId>
                         <version>${serenity.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>net.serenity-bdd</groupId>
+                        <artifactId>serenity-single-page-report</artifactId>
+                        <version>${serenity.version}</version>
+                    </dependency>
                 </dependencies>
+                <configuration>
+                    <tags>${tags}</tags>
+                    <reports>single-page-html</reports>
+                </configuration>
                 <executions>
                     <execution>
                         <id>serenity-reports</id>
